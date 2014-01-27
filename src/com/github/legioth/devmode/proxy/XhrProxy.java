@@ -120,25 +120,26 @@ public class XhrProxy extends BrowserChannel {
                 }
 
                 XhrProxy proxy = findProxy(sessionId);
+                synchronized (proxy) {
+                    ServletInputStream dataStream = request.getInputStream();
+                    String data = IOUtils.toString(dataStream);
+                    dataStream.close();
+                    try {
+                        System.out.println("Client sent " + data);
+                        JSONArray message = new JSONArray(data);
 
-                ServletInputStream dataStream = request.getInputStream();
-                String data = IOUtils.toString(dataStream);
-                dataStream.close();
-                try {
-                    System.out.println("Client sent " + data);
-                    JSONArray message = new JSONArray(data);
+                        JSONArray result = proxy.processMessage(message);
+                        System.out.println("Returning to client "
+                                + result.toString());
 
-                    JSONArray result = proxy.processMessage(message);
-                    System.out.println("Returning to client "
-                            + result.toString());
-
-                    setCorsHeaders(request, response);
-                    response.setStatus(200);
-                    PrintWriter writer = response.getWriter();
-                    writer.print(result.toString());
-                    writer.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                        setCorsHeaders(request, response);
+                        response.setStatus(200);
+                        PrintWriter writer = response.getWriter();
+                        writer.print(result.toString());
+                        writer.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }                    
                 }
             }
 
