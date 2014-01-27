@@ -6,7 +6,7 @@ Experiment for running GWT development mode without using a browser plugin. Curr
 To use:
 
 1. Start the XHR proxy: com.github.legioth.devmode.proxy.XhrProxy
-1. Add <script type="text/javascript" src="http://localhost:1234/devmode.js"></script> to your host page
+1. Add ``<script type="text/javascript" src="http://localhost:1234/devmode.js"></script>`` to your host page
 1. Disable the normal dev mode add-on to ensure that it isn't accidentally used.
 1. Ensure you don't have the Net panel active in Firebug, because it uses exessive amounts of memory with the thousands of XHR requests that will be sent
 1. Modify the devmode support file, depending on what linker you are using
