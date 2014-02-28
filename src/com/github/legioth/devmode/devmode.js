@@ -237,9 +237,9 @@ window.installDevMode = function(target) {
 							}
 							 
 							if (request.status === 200) {
-							  var response = request.responseText;
-							  var responseJson = JSON.parse(response);
-							  return responseJson;
+								var response = request.responseText;
+								var responseJson = JSON.parse(response);
+								return responseJson;
 							} else {
 								sendFailed = true;
 								console.error('Did not get 200 respone',request.status, request);
